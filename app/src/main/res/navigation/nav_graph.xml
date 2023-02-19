@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/startScreenFragment"
-        android:name="com.example.gbtranslator.StartScreenFragment"
+        android:name="com.example.gbtranslator.view.main.StartScreenFragment"
         android:label="StartScreenFragment" />
 </navigation>
