@@ -1,11 +1,8 @@
 package com.example.gbtranslator.view.main.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gbtranslator.R
 import com.example.gbtranslator.data.Word
 import com.example.gbtranslator.databinding.ItemRvStartScreenBinding
 
@@ -13,6 +10,11 @@ class StartScreenAdapter(
     private val onClick: (Word) -> Unit,
     private var data: List<Word>
 ) : RecyclerView.Adapter<StartScreenAdapter.RecyclerItemViewHolder>() {
+
+    fun submitList(newList: List<Word>) {
+        this.data = newList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -35,7 +37,7 @@ class StartScreenAdapter(
         holder: StartScreenAdapter.RecyclerItemViewHolder,
         position: Int
     ) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
