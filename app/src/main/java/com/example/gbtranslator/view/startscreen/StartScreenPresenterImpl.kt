@@ -1,4 +1,4 @@
-package com.example.gbtranslator.view.main
+package com.example.gbtranslator.view.startscreen
 
 import com.example.gbtranslator.data.AppState
 import com.example.gbtranslator.presenter.Presenter
@@ -10,8 +10,8 @@ import com.example.gbtranslator.view.base.View
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 
-class MainPresenterImpl <T : AppState, V : View>(
-    private val interactor: MainInteractor = MainInteractor(
+class StartScreenPresenterImpl <T : AppState, V : View>(
+    private val interactor: StartScreeInteractor = StartScreeInteractor(
         RepositoryImplementation(DataSourceRemote()),
         RepositoryImplementation(DataSourceLocal())
     ),

@@ -1,4 +1,4 @@
-package com.example.gbtranslator.view.main
+package com.example.gbtranslator.view.startscreen
 
 import com.example.gbtranslator.data.AppState
 import com.example.gbtranslator.data.Word
@@ -6,7 +6,7 @@ import com.example.gbtranslator.presenter.Interactor
 import com.example.gbtranslator.repository.Repository
 import io.reactivex.Observable
 
-class MainInteractor(
+class StartScreeInteractor(
     private val remoteRepository: Repository<List<Word>>,
     private val localRepository: Repository<List<Word>>
 ) : Interactor<AppState> {

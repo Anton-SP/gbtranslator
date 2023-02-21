@@ -1,25 +1,28 @@
-package com.example.gbtranslator.view.main
+package com.example.gbtranslator.view.startscreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.gbtranslator.R
 import com.example.gbtranslator.data.AppState
 import com.example.gbtranslator.databinding.FragmentStartScreenBinding
-import com.example.gbtranslator.presenter.Presenter
-import com.example.gbtranslator.view.base.View
-import com.example.gbtranslator.view.main.adapter.BaseFragment
-import com.example.gbtranslator.view.main.adapter.StartScreenAdapter
+import com.example.gbtranslator.view.base.BaseFragment
+import com.example.gbtranslator.view.startscreen.adapter.StartScreenAdapter
 
-class StartScreenFragment : BaseFragment<AppState>(){//(R.layout.fragment_start_screen) {
+class StartScreenFragment : BaseFragment<AppState>() {//(R.layout.fragment_start_screen) {
 
     //  private val binding: FragmentStartScreenBinding by viewBinding()
     private lateinit var binding: FragmentStartScreenBinding
+
+    override val model: StartScreenViewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(StartScreenViewModel::class.java)
+    }
+
+    private val observer = Observer<AppState> { renderData(it) }
 
     private val adapter: StartScreenAdapter by lazy {
         StartScreenAdapter(
@@ -51,7 +54,7 @@ class StartScreenFragment : BaseFragment<AppState>(){//(R.layout.fragment_start_
             searchDialogFragment.setOnSearchClickListener(object :
                 SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    presenter.getData(searchWord, true)
+                    model.getData(searchWord, true).observe(requireActivity(), observer)
                 }
             })
             searchDialogFragment.show(parentFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
@@ -60,24 +63,10 @@ class StartScreenFragment : BaseFragment<AppState>(){//(R.layout.fragment_start_
     }
 
     private fun initRecycler() {
-       binding.rvStartScreenFragment.apply {
-           adapter= this@StartScreenFragment.adapter
-           layoutManager = LinearLayoutManager(requireContext())
-       }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.attachView(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.detachView(this)
-    }
-
-    override fun createPresenter(): Presenter<AppState, View> {
-        return MainPresenterImpl()
+        binding.rvStartScreenFragment.apply {
+            adapter = this@StartScreenFragment.adapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
 
@@ -97,11 +86,9 @@ class StartScreenFragment : BaseFragment<AppState>(){//(R.layout.fragment_start_
                 showViewLoading()
                 if (appState.progress != null) {
                     binding.progressBarHorizontal.visibility = android.view.View.VISIBLE
-                    //  binding.progressBarRound.visibility = android.view.View.GONE
                     binding.progressBarHorizontal.progress = appState.progress
                 } else {
                     binding.progressBarHorizontal.visibility = android.view.View.GONE
-                    //   binding.progressBarRound.visibility = android.view.View.VISIBLE
                 }
             }
             is AppState.Error -> {
@@ -114,7 +101,7 @@ class StartScreenFragment : BaseFragment<AppState>(){//(R.layout.fragment_start_
         showViewError()
         binding.tvError.text = error ?: getString(R.string.undefined_error)
         binding.btnReload.setOnClickListener {
-            presenter.getData("hi", true)
+            model.getData("hi", true).observe(this, observer)
         }
     }
 
