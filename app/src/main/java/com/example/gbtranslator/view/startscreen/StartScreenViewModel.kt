@@ -9,7 +9,7 @@ import com.example.gbtranslator.viewmodel.BaseViewModel
 import io.reactivex.observers.DisposableObserver
 
 class StartScreenViewModel (
-    private val interactor: StartScreeInteractor = StartScreeInteractor(
+    private val interactor: StartScreenInteractor = StartScreenInteractor(
         RepositoryImplementation(DataSourceRemote()),
         RepositoryImplementation(DataSourceLocal())
     )

@@ -11,7 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 
 class StartScreenPresenterImpl <T : AppState, V : View>(
-    private val interactor: StartScreeInteractor = StartScreeInteractor(
+    private val interactor: StartScreenInteractor = StartScreenInteractor(
         RepositoryImplementation(DataSourceRemote()),
         RepositoryImplementation(DataSourceLocal())
     ),
