@@ -9,7 +9,7 @@ import com.example.gbtranslator.utils.ui.AlertDialogFragment
 import com.example.gbtranslator.viewmodel.BaseViewModel
 import com.example.gbtranslator.viewmodel.Interactor
 
-abstract class BaseFragment<T : AppState,I : Interactor<T>> : Fragment() {
+abstract class BaseFragment<T : AppState, I : Interactor<T>> : Fragment() {
 
     abstract val model: BaseViewModel<T>
 
@@ -19,6 +19,7 @@ abstract class BaseFragment<T : AppState,I : Interactor<T>> : Fragment() {
         super.onCreate(savedInstanceState)
         isNetworkAvailable = isOnline(requireActivity().applicationContext)
     }
+
     override fun onResume() {
         super.onResume()
         isNetworkAvailable = isOnline(requireActivity().applicationContext)
@@ -35,7 +36,8 @@ abstract class BaseFragment<T : AppState,I : Interactor<T>> : Fragment() {
     }
 
     protected fun showAlertDialog(title: String?, message: String?) {
-        AlertDialogFragment.newInstance(title, message).show(getParentFragmentManager(), DIALOG_FRAGMENT_TAG)
+        AlertDialogFragment.newInstance(title, message)
+            .show(getParentFragmentManager(), DIALOG_FRAGMENT_TAG)
     }
 
     private fun isDialogNull(): Boolean {

@@ -1,7 +1,7 @@
 package com.example.gbtranslator
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import dagger.android.AndroidInjection
 
 class MainActivity : AppCompatActivity() {

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.example.gbtranslator.databinding.FragmentStartScreenBinding
 import com.example.gbtranslator.utils.isOnline
 import com.example.gbtranslator.view.base.BaseFragment
 import com.example.gbtranslator.view.startscreen.adapter.StartScreenAdapter
-import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
@@ -76,6 +74,7 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
                     }
                 }
             })
+            searchDialogFragment.show(parentFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
     }
 

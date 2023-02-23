@@ -2,16 +2,14 @@ package com.example.gbtranslator.view.startscreen
 
 import androidx.lifecycle.LiveData
 import com.example.gbtranslator.data.AppState
-import com.example.gbtranslator.repository.RepositoryImplementation
-import com.example.gbtranslator.source.DataSourceLocal
-import com.example.gbtranslator.source.DataSourceRemote
 import com.example.gbtranslator.viewmodel.BaseViewModel
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import javax.inject.Inject
 
 class StartScreenViewModel @Inject constructor(
-    private val interactor: StartScreenInteractor) : BaseViewModel<AppState>() {
+    private val interactor: StartScreenInteractor
+) : BaseViewModel<AppState>() {
 
     private var appState: AppState? = null
 
@@ -31,6 +29,7 @@ class StartScreenViewModel @Inject constructor(
 
     private fun doOnSubscribe(): (Disposable) -> Unit =
         { liveDataForViewToObserve.value = AppState.Loading(null) }
+
     private fun getObserver(): DisposableObserver<AppState> {
         return object : DisposableObserver<AppState>() {
 
