@@ -1,6 +1,7 @@
 package com.example.gbtranslator.app
 
 import android.app.Application
+import com.example.gbtranslator.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector

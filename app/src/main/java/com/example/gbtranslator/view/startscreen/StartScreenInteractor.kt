@@ -4,8 +4,8 @@ import com.example.gbtranslator.data.AppState
 import com.example.gbtranslator.data.Word
 import com.example.gbtranslator.di.NAME_LOCAL
 import com.example.gbtranslator.di.NAME_REMOTE
-import com.example.gbtranslator.presenter.Interactor
 import com.example.gbtranslator.repository.Repository
+import com.example.gbtranslator.viewmodel.Interactor
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Named

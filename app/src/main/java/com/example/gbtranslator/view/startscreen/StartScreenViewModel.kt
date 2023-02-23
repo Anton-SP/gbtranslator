@@ -6,28 +6,31 @@ import com.example.gbtranslator.repository.RepositoryImplementation
 import com.example.gbtranslator.source.DataSourceLocal
 import com.example.gbtranslator.source.DataSourceRemote
 import com.example.gbtranslator.viewmodel.BaseViewModel
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
+import javax.inject.Inject
 
-class StartScreenViewModel (
-    private val interactor: StartScreenInteractor = StartScreenInteractor(
-        RepositoryImplementation(DataSourceRemote()),
-        RepositoryImplementation(DataSourceLocal())
-    )
-) : BaseViewModel<AppState>(){
+class StartScreenViewModel @Inject constructor(
+    private val interactor: StartScreenInteractor) : BaseViewModel<AppState>() {
 
     private var appState: AppState? = null
 
-    override fun getData(word: String, isOnline: Boolean): LiveData<AppState> {
+    fun subscribe(): LiveData<AppState> {
+        return liveDataForViewToObserve
+    }
+
+    override fun getData(word: String, isOnline: Boolean) {
         compositeDisposable.add(
             interactor.getData(word, isOnline)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .doOnSubscribe { liveDataForViewToObserve.value = AppState.Loading(null) }
+                .doOnSubscribe(doOnSubscribe())
                 .subscribeWith(getObserver())
         )
-        return super.getData(word, isOnline)
     }
 
+    private fun doOnSubscribe(): (Disposable) -> Unit =
+        { liveDataForViewToObserve.value = AppState.Loading(null) }
     private fun getObserver(): DisposableObserver<AppState> {
         return object : DisposableObserver<AppState>() {
 

@@ -1,26 +1,31 @@
 package com.example.gbtranslator.view.startscreen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gbtranslator.R
+import com.example.gbtranslator.app.App
 import com.example.gbtranslator.data.AppState
 import com.example.gbtranslator.databinding.FragmentStartScreenBinding
+import com.example.gbtranslator.utils.isOnline
 import com.example.gbtranslator.view.base.BaseFragment
 import com.example.gbtranslator.view.startscreen.adapter.StartScreenAdapter
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
-class StartScreenFragment : BaseFragment<AppState>() {//(R.layout.fragment_start_screen) {
+class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
 
-    //  private val binding: FragmentStartScreenBinding by viewBinding()
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: FragmentStartScreenBinding
-
-    override val model: StartScreenViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(StartScreenViewModel::class.java)
-    }
+    override lateinit var model: StartScreenViewModel
 
     private val observer = Observer<AppState> { renderData(it) }
 
@@ -31,6 +36,11 @@ class StartScreenFragment : BaseFragment<AppState>() {//(R.layout.fragment_start
             },
             mutableListOf()
         )
+    }
+
+    override fun onAttach(context: Context) {
+        (context.applicationContext as App).dispatchingAndroidInjector.inject(this)
+        super.onAttach(context)
     }
 
 
@@ -47,6 +57,10 @@ class StartScreenFragment : BaseFragment<AppState>() {//(R.layout.fragment_start
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        model = viewModelFactory.create(StartScreenViewModel::class.java)
+
+        model.subscribe().observe(viewLifecycleOwner, Observer<AppState> { renderData(it) })
+
         initRecycler()
 
         binding.fabSearch.setOnClickListener {
@@ -54,12 +68,15 @@ class StartScreenFragment : BaseFragment<AppState>() {//(R.layout.fragment_start
             searchDialogFragment.setOnSearchClickListener(object :
                 SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    model.getData(searchWord, true).observe(requireActivity(), observer)
+                    isNetworkAvailable = isOnline(requireActivity().applicationContext)
+                    if (isNetworkAvailable) {
+                        model.getData(searchWord, isNetworkAvailable)
+                    } else {
+                        showNoInternetConnectionDialog()
+                    }
                 }
             })
-            searchDialogFragment.show(parentFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
-
     }
 
     private fun initRecycler() {
@@ -74,8 +91,11 @@ class StartScreenFragment : BaseFragment<AppState>() {//(R.layout.fragment_start
         when (appState) {
             is AppState.Success -> {
                 val dataModel = appState.data
-                if (dataModel == null || dataModel.isEmpty()) {
-                    showErrorScreen(getString(R.string.empty_server_response_on_success))
+                if (dataModel.isNullOrEmpty()) {
+                    showAlertDialog(
+                        getString(R.string.dialog_tittle_sorry),
+                        getString(R.string.empty_server_response_on_success)
+                    )
                 } else {
                     showViewSuccess()
                     adapter.submitList(dataModel)
@@ -92,18 +112,11 @@ class StartScreenFragment : BaseFragment<AppState>() {//(R.layout.fragment_start
                 }
             }
             is AppState.Error -> {
-                showErrorScreen(appState.error.message)
+                showAlertDialog(getString(R.string.error_stub), appState.error.message)
             }
         }
     }
 
-    private fun showErrorScreen(error: String?) {
-        showViewError()
-        binding.tvError.text = error ?: getString(R.string.undefined_error)
-        binding.btnReload.setOnClickListener {
-            model.getData("hi", true).observe(this, observer)
-        }
-    }
 
     private fun showViewSuccess() {
         binding.layoutSuccess.visibility = android.view.View.VISIBLE

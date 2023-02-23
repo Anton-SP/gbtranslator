@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -62,11 +63,19 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.6'
+    implementation 'com.squareup:javapoet:1.13.0'
 
     //Dagger
-    implementation 'com.google.dagger:dagger-android:2.35.1'
-    implementation 'com.google.dagger:dagger-android-support:2.35.1'
-    kapt 'com.google.dagger:dagger-android-processor:2.35.1'
-    kapt 'com.google.dagger:dagger-compiler:2.35.1'
+    implementation 'com.google.dagger:dagger:2.43.2'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.43.2'
+    implementation 'com.google.dagger:dagger-android:2.43.2'
+    implementation 'com.google.dagger:dagger-android-support:2.43.2'
+    kapt 'com.google.dagger:dagger-compiler:2.43.2'
+    kapt 'com.google.dagger:dagger-android-processor:2.43.2'
+
+    //implementation 'com.google.dagger:dagger-android:2.43.2'
+    //  implementation 'com.google.dagger:dagger-android-support:2.43.2'
+    // kapt 'com.google.dagger:dagger-android-processor:2.35.1'
+    //  kapt 'com.google.dagger:dagger-compiler:2.35.1'
 
 }
