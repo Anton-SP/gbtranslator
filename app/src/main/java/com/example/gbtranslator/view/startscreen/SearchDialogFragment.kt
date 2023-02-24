@@ -1,4 +1,4 @@
-package com.example.gbtranslator.view.main
+package com.example.gbtranslator.view.startscreen
 
 import android.os.Bundle
 import android.text.Editable

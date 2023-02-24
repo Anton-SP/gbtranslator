@@ -1,4 +1,4 @@
-package com.example.gbtranslator.view.main.adapter
+package com.example.gbtranslator.view.startscreen.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
