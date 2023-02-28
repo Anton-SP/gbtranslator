@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitImplementation : DataSource<List<Word>> {
 
     override suspend fun getData(word: String): List<Word> {
-        return getService(BaseInterceptor.interceptor).searchAsync(word).await()
+        return getService(BaseInterceptor.interceptor).searchAsync(word)
     }
 
     private fun getService(interceptor: Interceptor): ApiService {
@@ -22,6 +22,7 @@ class RetrofitImplementation : DataSource<List<Word>> {
         return Retrofit.Builder()
             .baseUrl(BASE_URL_LOCATIONS)
             .addConverterFactory(GsonConverterFactory.create())
+            //.client(OkHttpClient.Builder().build())
             .client(createOkHttpClient(interceptor))
             .build()
     }
