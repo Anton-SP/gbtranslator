@@ -10,16 +10,18 @@ import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Named
 
-class StartScreenInteractor @Inject constructor(
-    @Named(NAME_REMOTE) private val remoteRepository: Repository<List<Word>>,
-    @Named(NAME_LOCAL) private val localRepository: Repository<List<Word>>
+class StartScreenInteractor (
+    private val repositoryRemote: Repository<List<Word>>,
+    private val repositoryLocal: Repository<List<Word>>
 ) : Interactor<AppState> {
 
-    override fun getData(word: String, fromRemoteSource: Boolean): Observable<AppState> {
-        return if (fromRemoteSource) {
-            remoteRepository.getData(word).map { AppState.Success(it) }
-        } else {
-            localRepository.getData(word).map { AppState.Success(it) }
-        }
+    override suspend fun getData(word: String, fromRemoteSource: Boolean): AppState {
+        return AppState.Success(
+            if (fromRemoteSource) {
+                repositoryRemote
+            } else {
+                repositoryLocal
+            }.getData(word)
+        )
     }
 }
