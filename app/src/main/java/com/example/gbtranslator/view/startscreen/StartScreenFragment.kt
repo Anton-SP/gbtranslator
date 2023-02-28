@@ -1,31 +1,23 @@
 package com.example.gbtranslator.view.startscreen
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gbtranslator.R
-import com.example.gbtranslator.app.App
 import com.example.gbtranslator.data.AppState
 import com.example.gbtranslator.databinding.FragmentStartScreenBinding
 import com.example.gbtranslator.utils.isOnline
 import com.example.gbtranslator.view.base.BaseFragment
 import com.example.gbtranslator.view.startscreen.adapter.StartScreenAdapter
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var binding: FragmentStartScreenBinding
     override lateinit var model: StartScreenViewModel
-
-    private val observer = Observer<AppState> { renderData(it) }
 
     private val adapter: StartScreenAdapter by lazy {
         StartScreenAdapter(
@@ -35,12 +27,6 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
             mutableListOf()
         )
     }
-
-    override fun onAttach(context: Context) {
-        (context.applicationContext as App).dispatchingAndroidInjector.inject(this)
-        super.onAttach(context)
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,11 +40,7 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
 
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        model = viewModelFactory.create(StartScreenViewModel::class.java)
-
-        model.subscribe().observe(viewLifecycleOwner, Observer<AppState> { renderData(it) })
-
+        initViewModel()
         initRecycler()
 
         binding.fabSearch.setOnClickListener {
@@ -77,6 +59,16 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
             searchDialogFragment.show(parentFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
     }
+
+    private fun initViewModel() {
+        if (binding.rvStartScreenFragment.adapter != null) {
+            throw IllegalStateException("The ViewModel should be initialised first")
+        }
+        val viewModel: StartScreenViewModel by viewModel()
+        model = viewModel
+        model.subscribe().observe(viewLifecycleOwner, { renderData(it) })
+    }
+
 
     private fun initRecycler() {
         binding.rvStartScreenFragment.apply {
