@@ -1,4 +1,4 @@
-package com.example.gbtranslator.view.startscreen
+package com.example.gbtranslator.view.translator
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,20 +7,20 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gbtranslator.R
 import com.example.gbtranslator.data.AppState
-import com.example.gbtranslator.databinding.FragmentStartScreenBinding
+import com.example.gbtranslator.databinding.FragmentTranslatorScreenBinding
 import com.example.gbtranslator.utils.isOnline
 import com.example.gbtranslator.view.base.BaseFragment
-import com.example.gbtranslator.view.startscreen.adapter.StartScreenAdapter
+import com.example.gbtranslator.view.translator.adapter.TranslatorScreenAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
+class TranslatorScreenFragment : BaseFragment<AppState, TranslatorScreenInteractor>() {
 
 
-    private lateinit var binding: FragmentStartScreenBinding
-    override lateinit var model: StartScreenViewModel
+    private lateinit var binding: FragmentTranslatorScreenBinding
+    override lateinit var model: TranslatorScreenViewModel
 
-    private val adapter: StartScreenAdapter by lazy {
-        StartScreenAdapter(
+    private val adapter: TranslatorScreenAdapter by lazy {
+        TranslatorScreenAdapter(
             onClick = {
                 Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
             },
@@ -33,7 +33,7 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): android.view.View? {
-        binding = FragmentStartScreenBinding.inflate(layoutInflater)
+        binding = FragmentTranslatorScreenBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -44,9 +44,9 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
         initRecycler()
 
         binding.fabSearch.setOnClickListener {
-            val searchDialogFragment = SearchDialogFragment.newInstance()
-            searchDialogFragment.setOnSearchClickListener(object :
-                SearchDialogFragment.OnSearchClickListener {
+            val translatorDialogFragment = TranslatorDialogFragment.newInstance()
+            translatorDialogFragment.setOnSearchClickListener(object :
+                TranslatorDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
                     isNetworkAvailable = isOnline(requireActivity().applicationContext)
                     if (isNetworkAvailable) {
@@ -56,7 +56,7 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
                     }
                 }
             })
-            searchDialogFragment.show(parentFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
+            translatorDialogFragment.show(parentFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
     }
 
@@ -64,7 +64,7 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
         if (binding.rvStartScreenFragment.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
-        val viewModel: StartScreenViewModel by viewModel()
+        val viewModel: TranslatorScreenViewModel by viewModel()
         model = viewModel
         model.subscribe().observe(viewLifecycleOwner, { renderData(it) })
     }
@@ -72,7 +72,7 @@ class StartScreenFragment : BaseFragment<AppState, StartScreenInteractor>() {
 
     private fun initRecycler() {
         binding.rvStartScreenFragment.apply {
-            adapter = this@StartScreenFragment.adapter
+            adapter = this@TranslatorScreenFragment.adapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
