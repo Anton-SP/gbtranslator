@@ -1,4 +1,4 @@
-package com.example.gbtranslator.view.startscreen
+package com.example.gbtranslator.view.translator
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.example.gbtranslator.databinding.FragmentSearchDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class SearchDialogFragment : BottomSheetDialogFragment() {
+class TranslatorDialogFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentSearchDialogBinding? = null
     private val binding get() = _binding!!
@@ -78,8 +78,8 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(): SearchDialogFragment {
-            return SearchDialogFragment()
+        fun newInstance(): TranslatorDialogFragment {
+            return TranslatorDialogFragment()
         }
     }
 }

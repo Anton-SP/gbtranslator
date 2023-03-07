@@ -1,15 +1,15 @@
-package com.example.gbtranslator.view.startscreen.adapter
+package com.example.gbtranslator.view.translator.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gbtranslator.data.Word
-import com.example.gbtranslator.databinding.ItemRvStartScreenBinding
+import com.example.gbtranslator.databinding.ItemRvTranslatorScreenBinding
 
-class StartScreenAdapter(
+class TranslatorScreenAdapter(
     private val onClick: (Word) -> Unit,
     private var data: List<Word>
-) : RecyclerView.Adapter<StartScreenAdapter.RecyclerItemViewHolder>() {
+) : RecyclerView.Adapter<TranslatorScreenAdapter.RecyclerItemViewHolder>() {
 
     fun submitList(newList: List<Word>) {
         this.data = newList
@@ -19,9 +19,9 @@ class StartScreenAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): StartScreenAdapter.RecyclerItemViewHolder {
+    ): TranslatorScreenAdapter.RecyclerItemViewHolder {
 
-        val binding = ItemRvStartScreenBinding.inflate(
+        val binding = ItemRvTranslatorScreenBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -34,7 +34,7 @@ class StartScreenAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: StartScreenAdapter.RecyclerItemViewHolder,
+        holder: TranslatorScreenAdapter.RecyclerItemViewHolder,
         position: Int
     ) {
         holder.bind(data[position])
@@ -45,7 +45,7 @@ class StartScreenAdapter(
     }
 
     inner class RecyclerItemViewHolder(
-        private val binding: ItemRvStartScreenBinding,
+        private val binding: ItemRvTranslatorScreenBinding,
         private val onClick: (Word) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

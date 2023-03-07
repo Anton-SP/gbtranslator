@@ -1,4 +1,4 @@
-package com.example.gbtranslator.view.startscreen
+package com.example.gbtranslator.view.translator
 
 import androidx.lifecycle.LiveData
 import com.example.gbtranslator.data.AppState
@@ -8,8 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class StartScreenViewModel(
-    private val interactor: StartScreenInteractor
+class TranslatorScreenViewModel(
+    private val interactor: TranslatorScreenInteractor
 ) : BaseViewModel<AppState>() {
 
     private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
