@@ -6,12 +6,12 @@
     app:startDestination="@id/translatorScreenFragment">
     <fragment
         android:id="@+id/translatorScreenFragment"
-        android:name="com.example.gbtranslator.view.translator.TranslatorScreenFragment"
+        android:name="com.example.featuretranslator.view.translator.TranslatorScreenFragment"
         android:label="TranslatorScreenFragment"
         tools:layout="@layout/fragment_translator_screen"/>
     <fragment
         android:id="@+id/timerScreenFragment"
-        android:name="com.example.gbtranslator.view.timer.TimerScreenFragment"
+        android:name="com.example.featuretimer.view.TimerScreenFragment"
         android:label="TimerScreenFragment"
         tools:layout="@layout/fragment_timer_screen"/>
 </navigation>

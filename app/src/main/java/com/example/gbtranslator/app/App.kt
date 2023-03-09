@@ -1,8 +1,6 @@
 package com.example.gbtranslator.app
 
 import android.app.Application
-import com.example.gbtranslator.di.application
-import com.example.gbtranslator.di.mainScreen
 import org.koin.core.context.startKoin
 
 class App : Application() {
@@ -10,7 +8,19 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            modules(listOf(application, mainScreen))
+            modules(
+                com.example.featuretranslator.di.featureTranslatorModule
+            )
         }
     }
+
+   /* override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            modules(listOf(
+                com.example.featuretranslator.di.application,
+                com.example.featuretranslator.di.mainScreen
+            ))
+        }
+    }*/
 }
