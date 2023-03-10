@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/translatorScreenFragment"
+        android:icon="@drawable/icon_translate"
+        android:title="Translator" />
+    <item
+        android:id="@id/timerScreenFragment"
+        android:icon="@drawable/icon_timer"
+        android:title="Timer" />
+</menu>
