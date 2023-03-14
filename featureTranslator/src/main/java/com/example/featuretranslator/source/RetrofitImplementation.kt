@@ -8,22 +8,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitImplementation :
-    com.example.featuretranslator.source.DataSource<List<com.example.featuretranslator.data.Word>> {
+    DataSource<List<Word>> {
 
     override suspend fun getData(word: String): List<com.example.featuretranslator.data.Word> {
-        return getService(com.example.featuretranslator.source.BaseInterceptor.Companion.interceptor).searchAsync(word)
+        return getService(BaseInterceptor.interceptor).searchAsync(word)
     }
 
-    private fun getService(interceptor: Interceptor): com.example.featuretranslator.source.ApiService {
-        return createRetrofit(interceptor).create(com.example.featuretranslator.source.ApiService::class.java)
+    private fun getService(interceptor: Interceptor): ApiService {
+        return createRetrofit(interceptor).create(ApiService::class.java)
     }
 
     //todo check adapter
     private fun createRetrofit(interceptor: Interceptor): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(com.example.featuretranslator.source.RetrofitImplementation.Companion.BASE_URL_LOCATIONS)
+            .baseUrl(BASE_URL_LOCATIONS)
             .addConverterFactory(GsonConverterFactory.create())
-            //.client(OkHttpClient.Builder().build())
             .client(createOkHttpClient(interceptor))
             .build()
     }

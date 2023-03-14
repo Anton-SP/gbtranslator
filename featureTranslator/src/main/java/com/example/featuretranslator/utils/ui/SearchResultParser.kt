@@ -3,6 +3,7 @@ package com.example.featuretranslator.utils.ui
 import com.example.featuretranslator.data.AppState
 import com.example.featuretranslator.data.Meanings
 import com.example.featuretranslator.data.Word
+import com.example.featuretranslator.room.HistoryEntity
 
 fun parseSearchResults(data: com.example.featuretranslator.data.AppState): com.example.featuretranslator.data.AppState {
     val newSearchResults = arrayListOf<com.example.featuretranslator.data.Word>()
@@ -50,4 +51,28 @@ fun convertMeaningsToString(meanings: List<com.example.featuretranslator.data.Me
         }
     }
     return meaningsSeparatedByComma
+}
+
+fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<Word> {
+    val searchResult = ArrayList<Word>()
+    if (!list.isNullOrEmpty()) {
+        for (entity in list) {
+            searchResult.add(Word(entity.word, null))
+        }
+    }
+    return searchResult
+}
+
+fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
+    return when (appState) {
+        is AppState.Success -> {
+            val searchResult = appState.data
+            if (searchResult.isNullOrEmpty() || searchResult[0].text.isNullOrEmpty()) {
+                null
+            } else {
+                HistoryEntity(searchResult[0].text!!, null)
+            }
+        }
+        else -> null
+    }
 }

@@ -4,7 +4,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
-class BaseInterceptor private constructor() : Interceptor {
+ class BaseInterceptor private constructor() : Interceptor {
 
     private var responseCode: Int = 0
 
@@ -15,20 +15,20 @@ class BaseInterceptor private constructor() : Interceptor {
         return response
     }
 
-    fun getResponseCode(): com.example.featuretranslator.source.BaseInterceptor.ServerResponseStatusCode {
+    fun getResponseCode(): ServerResponseStatusCode {
         var statusCode =
-            com.example.featuretranslator.source.BaseInterceptor.ServerResponseStatusCode.UNDEFINED_ERROR
+            ServerResponseStatusCode.UNDEFINED_ERROR
         when (responseCode / 100) {
             1 -> statusCode =
-                com.example.featuretranslator.source.BaseInterceptor.ServerResponseStatusCode.INFO
+                ServerResponseStatusCode.INFO
             2 -> statusCode =
-                com.example.featuretranslator.source.BaseInterceptor.ServerResponseStatusCode.SUCCESS
+                ServerResponseStatusCode.SUCCESS
             3 -> statusCode =
-                com.example.featuretranslator.source.BaseInterceptor.ServerResponseStatusCode.REDIRECTION
+                ServerResponseStatusCode.REDIRECTION
             4 -> statusCode =
-                com.example.featuretranslator.source.BaseInterceptor.ServerResponseStatusCode.CLIENT_ERROR
+                ServerResponseStatusCode.CLIENT_ERROR
             5 -> statusCode =
-                com.example.featuretranslator.source.BaseInterceptor.ServerResponseStatusCode.SERVER_ERROR
+                ServerResponseStatusCode.SERVER_ERROR
         }
         return statusCode
     }
@@ -45,7 +45,7 @@ class BaseInterceptor private constructor() : Interceptor {
 
     companion object {
 
-        val interceptor: com.example.featuretranslator.source.BaseInterceptor
-            get() = com.example.featuretranslator.source.BaseInterceptor()
+        val interceptor: BaseInterceptor
+            get() = BaseInterceptor()
     }
 }

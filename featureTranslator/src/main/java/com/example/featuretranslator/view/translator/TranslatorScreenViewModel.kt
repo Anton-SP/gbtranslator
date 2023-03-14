@@ -36,6 +36,4 @@ class TranslatorScreenViewModel(
         _mutableLiveData.value = AppState.Success(null)
         super.onCleared()
     }
-
-
 }
