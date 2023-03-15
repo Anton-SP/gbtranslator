@@ -8,10 +8,18 @@
         android:id="@+id/translatorScreenFragment"
         android:name="com.example.featuretranslator.view.translator.TranslatorScreenFragment"
         android:label="TranslatorScreenFragment"
-        tools:layout="@layout/fragment_translator_screen"/>
+        tools:layout="@layout/fragment_translator_screen">
+        <action
+            android:id="@id/action_translatorScreenFragment_to_detailScreenFragment"
+            app:destination="@id/detailScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/timerScreenFragment"
         android:name="com.example.featuretimer.view.TimerScreenFragment"
         android:label="TimerScreenFragment"
         tools:layout="@layout/fragment_timer_screen"/>
+    <fragment
+        android:id="@+id/detailScreenFragment"
+        android:name="com.example.featuretranslator.view.detail.DetailScreenFragment"
+        android:label="DetailScreenFragment" />
 </navigation>

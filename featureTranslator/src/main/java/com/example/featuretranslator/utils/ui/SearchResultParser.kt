@@ -5,10 +5,10 @@ import com.example.featuretranslator.data.Meanings
 import com.example.featuretranslator.data.Word
 import com.example.featuretranslator.room.HistoryEntity
 
-fun parseSearchResults(data: com.example.featuretranslator.data.AppState): com.example.featuretranslator.data.AppState {
-    val newSearchResults = arrayListOf<com.example.featuretranslator.data.Word>()
+fun parseSearchResults(data: AppState): AppState {
+    val newSearchResults = arrayListOf<Word>()
     when (data) {
-        is com.example.featuretranslator.data.AppState.Success -> {
+        is AppState.Success -> {
             val searchResults = data.data
             if (!searchResults.isNullOrEmpty()) {
                 for (searchResult in searchResults) {
@@ -19,16 +19,16 @@ fun parseSearchResults(data: com.example.featuretranslator.data.AppState): com.e
         else -> {}
     }
 
-    return com.example.featuretranslator.data.AppState.Success(newSearchResults)
+    return AppState.Success(newSearchResults)
 }
 
-private fun parseResult(dataModel: com.example.featuretranslator.data.Word, newDataModels: ArrayList<com.example.featuretranslator.data.Word>) {
+private fun parseResult(dataModel: Word, newDataModels: ArrayList<Word>) {
     if (!dataModel.text.isNullOrBlank() && !dataModel.meanings.isNullOrEmpty()) {
-        val newMeanings = arrayListOf<com.example.featuretranslator.data.Meanings>()
+        val newMeanings = arrayListOf<Meanings>()
         for (meaning in dataModel.meanings) {
             if (meaning.translation != null && !meaning.translation.translation.isNullOrBlank()) {
                 newMeanings.add(
-                    com.example.featuretranslator.data.Meanings(
+                    Meanings(
                         meaning.translation,
                         meaning.imageUrl
                     )
@@ -36,12 +36,12 @@ private fun parseResult(dataModel: com.example.featuretranslator.data.Word, newD
             }
         }
         if (newMeanings.isNotEmpty()) {
-            newDataModels.add(com.example.featuretranslator.data.Word(dataModel.text, newMeanings))
+            newDataModels.add(Word(dataModel.text, newMeanings))
         }
     }
 }
 
-fun convertMeaningsToString(meanings: List<com.example.featuretranslator.data.Meanings>): String {
+fun convertMeaningsToString(meanings: List<Meanings>): String {
     var meaningsSeparatedByComma = String()
     for ((index, meaning) in meanings.withIndex()) {
         meaningsSeparatedByComma += if (index + 1 != meanings.size) {
@@ -76,3 +76,5 @@ fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
         else -> null
     }
 }
+
+

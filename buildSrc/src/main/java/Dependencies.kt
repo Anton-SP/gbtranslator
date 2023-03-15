@@ -23,6 +23,7 @@ object Versions {
     //Design
     const val appcompat = "1.6.1"
     const val material = "1.8.0"
+    const val swipe = "1.1.0"
 
     //Kotlin
     const val core = "1.7.0"
@@ -66,6 +67,7 @@ object Versions {
 object Design {
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val material = "com.google.android.material:material:${Versions.material}"
+    const val swipe = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe}"
 }
 
 object Kotlin {

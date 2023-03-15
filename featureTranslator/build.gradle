@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -14,8 +15,9 @@ dependencies {
     //AndroidX
     implementation Design.appcompat
 
-    //Material
+    //Design
     implementation Design.material
+    implementation Design.swipe
 
     //Test
     testImplementation TestImpl.junit
@@ -42,4 +44,7 @@ dependencies {
     //Koin
     implementation Koin.core
     implementation Koin.android
+
+    //Coil
+    implementation Coil.coil
 }

@@ -1,14 +1,15 @@
 package com.example.featuretranslator.view.translator
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.featuretranslator.R
 import com.example.featuretranslator.data.AppState
 import com.example.featuretranslator.databinding.FragmentTranslatorScreenBinding
 import com.example.featuretranslator.utils.isOnline
+import com.example.featuretranslator.utils.ui.navigate
 import com.example.featuretranslator.view.base.BaseFragment
 import com.example.featuretranslator.view.translator.adapter.TranslatorScreenAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,7 +23,11 @@ class TranslatorScreenFragment : BaseFragment<AppState, TranslatorScreenInteract
     private val adapter: TranslatorScreenAdapter by lazy {
         TranslatorScreenAdapter(
             onClick = {
-                Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
+                      navigate(
+                          actionId = R.id.action_translatorScreenFragment_to_detailScreenFragment,
+                          data = it
+                      )
+              //  Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
             },
             mutableListOf()
         )
