@@ -77,4 +77,59 @@ fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
     }
 }
 
+fun parseOnlineSearchResults(appState: AppState): AppState {
+    return AppState.Success(mapResult(appState, true))
+}
+
+fun parseLocalSearchResults(appState: AppState): AppState {
+    return AppState.Success(mapResult(appState, false))
+}
+
+private fun mapResult(
+    appState: AppState,
+    isOnline: Boolean
+): List<Word> {
+    val newSearchResults = arrayListOf<Word>()
+    when (appState) {
+        is AppState.Success -> {
+            getSuccessResultData(appState, isOnline, newSearchResults)
+        }
+        else -> {}
+    }
+    return newSearchResults
+}
+
+private fun getSuccessResultData(
+    appState: AppState.Success,
+    isOnline: Boolean,
+    newDataModels: ArrayList<Word>
+) {
+    val dataModels: List<Word> = appState.data as List<Word>
+    if (dataModels.isNotEmpty()) {
+        if (isOnline) {
+            for (searchResult in dataModels) {
+                parseOnlineResult(searchResult, newDataModels)
+            }
+        } else {
+            for (searchResult in dataModels) {
+                newDataModels.add(Word(searchResult.text, arrayListOf()))
+            }
+        }
+    }
+}
+
+private fun parseOnlineResult(dataModel: Word, newDataModels: ArrayList<Word>) {
+    if (!dataModel.text.isNullOrBlank() && !dataModel.meanings.isNullOrEmpty()) {
+        val newMeanings = arrayListOf<Meanings>()
+        for (meaning in dataModel.meanings) {
+            if (meaning.translation != null && !meaning.translation.translation.isNullOrBlank()) {
+                newMeanings.add(Meanings(meaning.translation, meaning.imageUrl))
+            }
+        }
+        if (newMeanings.isNotEmpty()) {
+            newDataModels.add(Word(dataModel.text, newMeanings))
+        }
+    }
+}
+
 

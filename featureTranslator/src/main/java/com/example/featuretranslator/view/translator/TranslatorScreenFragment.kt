@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.featuretranslator.R
 import com.example.featuretranslator.data.AppState
+import com.example.featuretranslator.data.Word
 import com.example.featuretranslator.databinding.FragmentTranslatorScreenBinding
 import com.example.featuretranslator.utils.isOnline
 import com.example.featuretranslator.utils.ui.navigate
@@ -23,11 +24,10 @@ class TranslatorScreenFragment : BaseFragment<AppState, TranslatorScreenInteract
     private val adapter: TranslatorScreenAdapter by lazy {
         TranslatorScreenAdapter(
             onClick = {
-                      navigate(
-                          actionId = R.id.action_translatorScreenFragment_to_detailScreenFragment,
-                          data = it
-                      )
-              //  Toast.makeText(requireActivity(), it.text, Toast.LENGTH_SHORT).show()
+                navigate(
+                    actionId = R.id.action_translatorScreenFragment_to_detailScreenFragment,
+                    data = it
+                )
             },
             mutableListOf()
         )

@@ -12,6 +12,9 @@
         <action
             android:id="@id/action_translatorScreenFragment_to_detailScreenFragment"
             app:destination="@id/detailScreenFragment" />
+        <action
+            android:id="@+id/action_translatorScreenFragment_to_historyScreenFragment2"
+            app:destination="@id/historyScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/timerScreenFragment"
@@ -22,4 +25,8 @@
         android:id="@+id/detailScreenFragment"
         android:name="com.example.featuretranslator.view.detail.DetailScreenFragment"
         android:label="DetailScreenFragment" />
+    <fragment
+        android:id="@+id/historyScreenFragment"
+        android:name="com.example.featuretranslator.view.history.HistoryScreenFragment"
+        android:label="HistoryScreenFragment" />
 </navigation>

@@ -9,6 +9,8 @@ import com.example.featuretranslator.repository.RepositoryLocal
 import com.example.featuretranslator.room.HistoryDataBase
 import com.example.featuretranslator.source.RetrofitImplementation
 import com.example.featuretranslator.source.RoomDataBaseImplementation
+import com.example.featuretranslator.view.history.HistoryInteractor
+import com.example.featuretranslator.view.history.HistoryViewModel
 import com.example.featuretranslator.view.translator.TranslatorScreenInteractor
 import com.example.featuretranslator.view.translator.TranslatorScreenViewModel
 import org.koin.dsl.module
@@ -26,6 +28,11 @@ val mainScreen = module {
     factory { TranslatorScreenInteractor(get(),get()) }
 }
 
+val historyScreen = module {
+    factory { HistoryViewModel(get()) }
+    factory { HistoryInteractor(get(), get()) }
+}
+
 val featureTranslatorModule = module {
-    includes(source, mainScreen)
+    includes(source, mainScreen, historyScreen)
 }
