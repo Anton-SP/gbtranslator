@@ -5,19 +5,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.featuretranslator.R
 import com.example.featuretranslator.data.AppState
-import com.example.featuretranslator.data.Word
 import com.example.featuretranslator.databinding.FragmentTranslatorScreenBinding
 import com.example.featuretranslator.utils.isOnline
 import com.example.featuretranslator.utils.ui.navigate
+import com.example.featuretranslator.utils.ui.viewById
 import com.example.featuretranslator.view.base.BaseFragment
 import com.example.featuretranslator.view.translator.adapter.TranslatorScreenAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class TranslatorScreenFragment : BaseFragment<AppState, TranslatorScreenInteractor>() {
 
-
+    private val translatorRecyclerView by viewById<RecyclerView>(R.id.rv_start_screen_fragment)
+    private val translatorFAB by viewById<FloatingActionButton>(R.id.fab_search)
+    /*
+    Оставил binding хотя с делегатом можно было бы и без него.
+    Пример с делегатом view наглядный, но вводить для работы с ним на каждый элемент
+    свою переменную я считаю избыточным/ binidng в этом плане делает то что должен, избавляет нас от этого
+     */
     private lateinit var binding: FragmentTranslatorScreenBinding
     override lateinit var model: TranslatorScreenViewModel
 
@@ -42,13 +51,12 @@ class TranslatorScreenFragment : BaseFragment<AppState, TranslatorScreenInteract
         return binding.root
     }
 
-
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
         initRecycler()
 
-        binding.fabSearch.setOnClickListener {
+        translatorFAB.setOnClickListener {
             val translatorDialogFragment = TranslatorDialogFragment.newInstance()
             translatorDialogFragment.setOnSearchClickListener(object :
                 TranslatorDialogFragment.OnSearchClickListener {
@@ -66,7 +74,7 @@ class TranslatorScreenFragment : BaseFragment<AppState, TranslatorScreenInteract
     }
 
     private fun initViewModel() {
-        if (binding.rvStartScreenFragment.adapter != null) {
+        if (translatorRecyclerView.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
         val viewModel: TranslatorScreenViewModel by viewModel()
@@ -76,7 +84,7 @@ class TranslatorScreenFragment : BaseFragment<AppState, TranslatorScreenInteract
 
 
     private fun initRecycler() {
-        binding.rvStartScreenFragment.apply {
+        translatorRecyclerView.apply {
             adapter = this@TranslatorScreenFragment.adapter
             layoutManager = LinearLayoutManager(requireContext())
         }

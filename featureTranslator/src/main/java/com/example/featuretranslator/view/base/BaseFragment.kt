@@ -8,8 +8,10 @@ import com.example.featuretranslator.utils.isOnline
 import com.example.featuretranslator.utils.ui.AlertDialogFragment
 import com.example.featuretranslator.viewmodel.BaseViewModel
 import com.example.featuretranslator.viewmodel.Interactor
+import org.koin.androidx.scope.ScopeFragment
 
-abstract class BaseFragment<T : AppState, I : Interactor<T>> : Fragment() {
+abstract class BaseFragment<T : AppState, I : Interactor<T>> : ScopeFragment() {
+//abstract class BaseFragment<T : AppState, I : Interactor<T>> : Fragment() {
 
     abstract val model: BaseViewModel<T>
 
