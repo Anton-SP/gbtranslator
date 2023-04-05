@@ -3,7 +3,7 @@ import org.gradle.api.JavaVersion
 object Config {
     const val applicationId = "com.example.gbtranslator"
     const val compileSdk = 33
-    const val minSdk = 24
+    const val minSdk = 31
     const val targetSdk = 33
     val javaVersion = JavaVersion.VERSION_1_8
 }

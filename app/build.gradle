@@ -45,13 +45,9 @@ dependencies {
     implementation Retrofit2.converterJson
     implementation Retrofit2.interceptor
 
-    //implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 
     //ViewBinding
     implementation ViewBinding.viewBinding
-
-    //implementation 'com.squareup:javapoet:1.13.0'
-
 
     //Koin
     implementation Koin.core
